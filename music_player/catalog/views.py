@@ -3,4 +3,3 @@ from django.views import generic
 # Create your views here.
 def index(request):
     return render(request, 'catalog/index.html',{})
-
