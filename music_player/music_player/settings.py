@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'catalog.apps.CatalogConfig',
+    'bootstrap',
+    'fontawesome',
 ]
 
 MIDDLEWARE = [
@@ -60,7 +62,7 @@ AUTH_USER_MODEL = "catalog.User"
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -80,7 +82,7 @@ WSGI_APPLICATION = 'music_player.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 DATABASES = {
     "default": {
-        'ENGINE':"django.db.backends.mysql",
+        'ENGINE': "django.db.backends.mysql",
         'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
         'NAME': os.getenv('DB_NAME'),
