@@ -1,0 +1,75 @@
+{% load static%}
+{% load i18n %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'fontawesome/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'catalog/css/login.css' %}">
+    <title>{% trans "Login/Register" %}</title>
+</head>
+<body>
+    <div id="logreg-forms">
+        <form class="form-signin" method="post" action="{% url 'login' %}">
+            {% csrf_token %}
+            <h1 class="h3 mb-3 font-weight-normal text-center" >{% trans "Sign in" %}</h1>
+            <div class="social-login">
+                <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i> {% trans "Sign in with Facebook" %}</span> </button>
+                <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> {% trans "Sign in with Google+" %}</span> </button>
+            </div>
+            <p class = "text-center" > {% trans "OR" %} </p>
+            <input name="username" type="text" id="inputUsername" class="form-control" placeholder="Username" required="" autofocus="">
+            <input name="password" type="password" id="inputPassword" class="form-control" placeholder="Password" required="">
+            {% if form.errors %}
+            <p class="text-danger">{% translate "Your username and password didn't match. Please try again." %}</p>
+            {% endif %}
+            <button class="btn btn-success btn-block" type="submit"><i class="fas fa-sign-in-alt"></i> {% trans "Sign in" %}</button>
+            <a href="#" id="forgot_pswd"> {% trans "Forgot password?" %}</a>
+            <hr>
+            <button class="btn btn-primary btn-block" type="button" id="btn-signup"><i class="fas fa-user-plus"></i> {% trans "Sign up New Account"%} </button>
+            </form>
+
+            <form action="/reset/password/" class="form-reset">
+                <input type="email" id="resetEmail" class="form-control" placeholder="Email address" required="" autofocus="">
+                <button class="btn btn-primary btn-block" type="submit"> {% trans "Reset Password" %}</button>
+                <a href="#" id="cancel_reset"><i class="fas fa-angle-left"></i> {% trans "Back" %}</a>
+            </form>
+            {% if form.errors %}
+            <script>
+                function toggleSignUp(){
+                    $('#logreg-forms .form-signin').toggle(); // display:block or none
+                    $('#logreg-forms .form-signup').toggle(); // display:block or none
+                  }
+                toggleSignUp();
+            </script>
+            {% endif %}
+            <form method="post" action="{% url 'login'%}" class="form-signup">
+                {% csrf_token %}
+                <div class="social-login">
+                    <button class="btn facebook-btn social-btn" type="button"><span><i class="fab fa-facebook-f"></i>  {% trans "Sign up with Facebook" %}</span> </button>
+                </div>
+                <div class="social-login">
+                    <button class="btn google-btn social-btn" type="button"><span><i class="fab fa-google-plus-g"></i> {% trans "Sign up with Google+" %}</span> </button>
+                </div>
+                
+                <p class = "text-center"> {% trans "OR" %}</p>
+
+                <input name="username" type="text" id="user-name" class="form-control" placeholder="Full name" required="" autofocus="">
+                <input name="email" type="email" id="user-email" class="form-control" placeholder="Email address" required autofocus="">
+                <input name="password1" type="password" id="user-pass" class="form-control" placeholder="Password" required autofocus="">
+                <input name="password2" type="password" id="user-repeatpass" class="form-control" placeholder="Repeat Password" required autofocus="">
+
+                <button class="btn btn-primary btn-block" type="submit"><i class="fas fa-user-plus"></i>  {% trans "Sign Up" %}</button>
+                <a href="#" id="cancel_signup"><i class="fas fa-angle-left"></i>  {% trans "Back" %}</a>
+            </form>
+            <br>
+            
+    </div>
+    <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'catalog/js/login.js' %}"></script>
+</body>
+</html>
