@@ -16,7 +16,7 @@ class Tag(models.Model):
 
 
 class User(AbstractUser):
-    pass
+    email = models.EmailField(unique=True)
 
 
 class Song(models.Model):
