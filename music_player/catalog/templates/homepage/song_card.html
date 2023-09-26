@@ -1,58 +1,65 @@
 {% extends "catalog/index.html" %}
-{% load i18n %}
 {% load static %}
-{% block content %}
+{% load i18n %}
 
-<h2 class = "section-header"> {% trans "Trending Songs" %}</h2>
-<div class = "row cards-wrapper">
-{% for i in song %}
-<div class = "card-wrapper">
-<div class="card card-styling">
-  <img src="{%static 'catalog/music.jpg'%}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title"> {% trans "Song's name" %}</h5>
-    <p class="card-text"> {% trans "Mô tả" %}</p>
-  <a href="#" class="btn btn-primary"> {% trans "Listen song" %}</a>
+{% block title %}All Songs{% endblock %}
+
+{% block body %}
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="{%static 'catalog/music1.jpg'%} " class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{%static 'catalog/music1.jpg'%}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{%static 'catalog/music1.jpg'%}" class="d-block w-100" alt="...">
+    </div>
   </div>
 </div>
-</div>
-{% endfor %}
-</div>
-<hr>
 
-<h2 class = "section-header">{% trans "Your Favourite Playlist" %}</h2>
-<div class = "row cards-wrapper">
+<div class="container">
 {% for i in song %}
-  <div class = "card-wrapper">
-  <div class="card card-styling">
-  <img src="{%static 'catalog/music.jpg'%}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title"> {% trans "Song's name" %}</h5>
-    <p class="card-text"> {% trans "Mô tả" %}</p>
-  <a href="#" class="btn btn-primary"> {% trans "Listen song" %}</a>
+<div class="card mb-3" style="max-width: 940px; padding-top: 3%;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="/media/{{i.image}}" class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" style="font-weight: 650;">{{ i.name }}</h5>
+          <p class="card-text">{{i.tags}}</p>
+          
+          {% if user.is_authenticated %}
+          <form action = "/catalog/usersong/" method ="POST">{% csrf_token %}
+          <input type = "hidden" name ="song" value = "{{i.id}}">
+          <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger">Listen Song</button></p>
+          </form>
+          {% comment %} dropdown show các playlists của user {% endcomment %}
+
+          <div class="dropdown">
+            <a class="btn btn-outline-danger text-danger dropdown-toggle" id="navbarDropdown{{i.id}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {% trans "Add to playlist" %}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown{{i.id}}">
+            {% for playlist in playlists %}
+              <form action = "/catalog/addplaylist/" method ="POST">{% csrf_token %}
+              <input type = "hidden" name ="song_id" value = "{{i.id}}">
+              <input type = "hidden" name ="playlist_id" value = "{{playlist.id}}">
+              <input type = "submit" class = "dropdown-item" value = "{{playlist.name}}">
+              </form>
+              {% comment %} <a class="dropdown-item" href="#"> {{playlist.name}} </a> {% endcomment %}
+            {% endfor %}
+            </div>
+          </div>
+          {% else %}
+          <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger">Listen Song</button></p>
+          {%endif%}
+        </div>
+      </div>
+    </div>
   </div>
+  {% endfor %}
 </div>
-</div>
-{% endfor %}
-</div>
-<hr>
-
-
-<h2 class = "section-header">{% trans "Your liked songs" %}</h2>
-<div class = "row cards-wrapper">
-{% for i in song %}
-  <div class = "card-wrapper">
-  <div class="card card-styling">
-  <img src="{%static 'catalog/music.jpg'%}" class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title"> {% trans "Song's name" %}</h5>
-    <p class="card-text"> {% trans "Mô tả" %}</p>
-  <a href="#" class="btn btn-primary"> {% trans "Listen song" %}</a>
-  </div>
-</div>
-</div>
-{% endfor %}
-</div>
-<hr>
-
 {% endblock %}

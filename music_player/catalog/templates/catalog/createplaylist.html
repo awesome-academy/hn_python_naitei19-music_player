@@ -1,0 +1,31 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+{% block title %}Create Playlist{% endblock %}
+{% block body %}
+
+<div class = "conatainer my-3" >
+    <form action = "/catalog/creatplaylist/" method ="POST">{% csrf_token %}
+
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Your playlist's Name</label>
+        <input type="text" class="form-control" aria-describedby="emailHelp"name = "name" placeholder="Enter your playlist's name">
+        <small id="emailHelp" class="form-text text-muted"></small>
+      </div>
+      {% comment %} <div class="form-group">
+        <label for="exampleInputPassword1">Artist</label>
+        <input type="text" class="form-control" id="exampleInputPassword1" name="artist" placeholder="Enter the artist">
+      </div> {% endcomment %}
+      <input type="hidden" name="owner" value="{{ request.user.id }}">  <!-- Thêm trường artist ẩn để lưu ID người dùng -->
+
+      <div class="form-group">
+        <label for="exampleControlFile1">Upload image</label>
+        <input type="file" class="form-control" name="image">
+      </div>
+      <button type="submit" class="btn btn-primary">Create Playlist</button>
+    
+</div>
+    
+    
+{% endblock %}

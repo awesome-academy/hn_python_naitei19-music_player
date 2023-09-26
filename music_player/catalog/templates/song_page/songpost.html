@@ -1,0 +1,40 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Song{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="/media/{{song.image}}" height="350px" width="350px">
+        </div>
+        <div class="col-md-6">
+            <h2 style="padding-top: 6%; font-weight: 550; color: coral;">Title: {{song.name}}
+            <h4 style="padding-top: 2%; font-weight: 550;">Category: {{song.tags}}</h4>
+            <h4 style="padding-top: 2%; font-weight: 550;">Artist: {{ song.Artist }}</h4>
+            <video width="320" height="80" controls>
+                <source src="/media/{{song.content}}" type="video/mp4">
+            </video>
+            {{ song.id }}
+            <div>
+            <form action = "/catalog/listenlater/" method ="POST">{% csrf_token %}
+            <input type = "hidden" name ="listen_id" value = "{{ song.id }}">
+            <button type="summit" class="btn btn-outline-danger">Add to Listenlater</button> 
+            </form>
+            <a href="/media/{{ song.content }}" download="{{ song.name }}" type="video/mp4">
+                <button class="btn btn-outline-danger">Download Song</button>
+            </a>   
+        </div>         
+        </div>
+    </div>
+</div>
+<br>
+</div>
+
+{% if cond %}
+
+{% endif %} 
+{% endblock %}

@@ -19,11 +19,13 @@ from django.urls import path
 from django.views.generic import RedirectView
 from django.urls import include
 from catalog import views
+from django.conf.urls.static import static
+from django.conf import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('catalog/', include("catalog.urls")),
     path('', RedirectView.as_view(url='/catalog')),
     path('accounts/', include('django.contrib.auth.urls')),
-    path('accounts/register', views.register_user, name='user-create'),
-]
+    # path('accounts/register', views.register_user, name='user-create'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

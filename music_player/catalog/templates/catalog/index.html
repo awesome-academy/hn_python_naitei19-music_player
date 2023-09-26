@@ -3,14 +3,14 @@
 <head>
 {% load static %}
 {% load i18n %}
-<title>{% trans "Music" %}</title>
+<title>{% block title %} {% endblock %}</title>
 </head>
 <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
 <link rel="stylesheet" href="{% static 'catalog/css/styles.css' %}">
 <body>
     {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#"> {% trans "Navbar" %} </a>
+        <a class="navbar-brand" href="/catalog/"> {% trans "MP3Player" %} </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -18,25 +18,29 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">{% trans "Home" %} <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="/catalog/">{% trans "Home" %} <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"> {% trans "Link" %} </a>
+              <a class="nav-link" href="/catalog/songs/"> {% trans "All Songs" %} </a>
             </li>
+            {% if user.is_authenticated %}
             <li class="nav-item dropdown">
               <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                {% trans "Dropdown" %}
+                {% trans "My profile" %}
               </a>
               <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a class="dropdown-item" href="#"> {% trans "Action" %} </a>
-                <a class="dropdown-item" href="#"> {% trans "Another action" %} </a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#"> {% trans "Something else here" %} </a>
+                <a class="dropdown-item" href="/catalog/listenlater"> {% trans "Listenlater" %} </a>
+                <a class="dropdown-item" href="/catalog/usersong"> {% trans "User History song" %} </a>
+                <a class="dropdown-item" href="/catalog/upload"> {% trans "Upload song" %} </a>
+                <a class="dropdown-item" href="/catalog/creatplaylist"> {% trans "Create your playlist" %} </a>
+                <a class="dropdown-item" href="/catalog/playlist"> {% trans "All playlists" %} </a>
+                <a class="dropdown-item" href="/catalog/trending"> {% trans "Trending Songs" %} </a>
               </div>
             </li>
-            <li class="nav-item">
+            {% endif %}
+            {% comment %} <li class="nav-item">
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">  {% trans "Disabled" %} </a>
-            </li>
+            </li> {% endcomment %}
             <form class="form-inline my-2 my-lg-0">
               <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> {% trans "Search" %} </button>
@@ -62,22 +66,8 @@
           {% endif %}
         </div>
       </nav>
-
-      <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-          <div class="carousel-item active">
-              <img src="{%static 'catalog/music1.jpg'%} " class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="{%static 'catalog/music1.jpg'%}" class="d-block w-100" alt="...">
-          </div>
-          <div class="carousel-item">
-            <img src="{%static 'catalog/music1.jpg'%}" class="d-block w-100" alt="...">
-          </div>
-        </div>
-      </div>
       {% endblock %}
-      {% block content %}
+      {% block body %}
       {% endblock %}
 <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
 <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>

@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'catalog.apps.CatalogConfig',
     'bootstrap',
     'fontawesome',
+    'django_dump_die',
 ]
 
 MIDDLEWARE = [
@@ -53,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django_dump_die.middleware.DumpAndDieMiddleware',
 ]
 
 ROOT_URLCONF = 'music_player.urls'
@@ -130,3 +132,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
+
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -1,0 +1,39 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Upload Song{% endblock %}
+{% block body %}
+
+<div class = "conatainer my-3" >
+    <form action = "/catalog/upload/" enctype="multipart/form-data" method ="POST">{% csrf_token %}
+
+
+    <div class="form-group">
+        <label for="exampleInputEmail1">Your Music's name</label>
+        <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"name = "name" placeholder="Enter your music's name">
+        <small id="emailHelp" class="form-text text-muted">Điền chính xác tên bài hát .</small>
+      </div>
+      {% comment %} <div class="form-group">
+        <label for="exampleInputPassword1">Artist</label>
+        <input type="text" class="form-control" id="exampleInputPassword1" name="artist" placeholder="Enter the artist">
+      </div> {% endcomment %}
+      <input type="hidden" name="artist" value="{{ request.user.id }}">  <!-- Thêm trường artist ẩn để lưu ID người dùng -->
+
+      <div class="form-group">
+        <label for="exampleControlFile1">Upload image</label>
+        <input type="file" class="form-control" name="image">
+      </div>
+      <div class="form-group">
+          <label for="exampleControlFile1">Upload song</label>
+          <input type="file" class="form-control" name="content">
+        </div>
+      <button type="submit" class="btn btn-primary">Upload</button>
+    
+</div>
+    
+    
+{% endblock %}
+
+
+ 

@@ -1,0 +1,29 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Playlist{% endblock %}
+
+{% block body %}
+
+<div class="container">
+{% for i in playlist %}
+<div class="card mb-3" style="max-width: 940px; padding-top: 3%;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="/media/{{i.image}}" class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" style="font-weight: 650;">{{ i.name }}</h5>
+          <p class="card-text">{{i.owner.username}}</p>
+          <a href="/catalog/playlists/{{i.id}}"><button class="btn btn-outline-danger">View playlist</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
+
+
