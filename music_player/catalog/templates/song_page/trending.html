@@ -1,0 +1,33 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+{% block content %}
+<div class="container">
+<h1> {% trans "Trending Songs:"%}</h1>
+{% for i in trending %}
+<div class="card mb-3">
+  <div class="card-mb3-add">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src={{i.image.url}} class="card-img">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title">{{ i.name }}</h5>
+          <h5 class="card-tags"> {% trans "Category:"%}
+            {% for j in i.tags.all %}
+            <div class="p-1 d-inline-block border border-primary rounded">{{j.name}}</div>
+            {% endfor %}
+          </h5>
+          <p class="listen_count">{% trans "Listen count:"%} {{ i.listen_count }}</p>
+          <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger">{% trans "Listen Song"%}</button></a>
+          <a href="/media/{{ i.content }}" download="{{ i.name }}" type="video/mp4">
+            <button class="btn btn-outline-danger">{% trans "Download Song"%}</button>
+          </a>  
+        </div>
+      </div>
+    </div>
+  </div>
+{% endfor %}
+</div>
+{% endblock %}

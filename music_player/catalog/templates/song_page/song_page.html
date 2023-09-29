@@ -1,0 +1,15 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "All Songs"%}{% endblock %}
+
+{% block content %}
+
+<div class="container">
+<h1>{% trans "All Songs here:"%}</h1>
+{% for i in song %}
+  {% include 'song_page/song_card_partial.html' with song=song %}
+{% endfor %}
+</div>
+{% endblock %}
