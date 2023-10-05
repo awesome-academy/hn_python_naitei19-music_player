@@ -35,16 +35,17 @@
                 <a class="dropdown-item" href="/catalog/creatplaylist"> {% trans "Create your playlist" %} </a>
                 <a class="dropdown-item" href="/catalog/playlist"> {% trans "All playlists" %} </a>
                 <a class="dropdown-item" href="/catalog/trending"> {% trans "Trending Songs" %} </a>
+                <a class="dropdown-item" href="/catalog/display_most_like"> {% trans "Most Liked Song" %} </a>
               </div>
             </li>
             {% endif %}
             {% comment %} <li class="nav-item">
               <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">  {% trans "Disabled" %} </a>
             </li> {% endcomment %}
-            <form class="form-inline my-2 my-lg-0">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <form class="form-inline my-2 my-lg-0" method="GET" action="{% url "search" %}">
+              <input name="query" class="form-control mr-sm-2" type="search" placeholder="{% trans 'Search' %}" aria-label="Search">
               <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> {% trans "Search" %} </button>
-            </form>
+          </form>
           </ul>
           {% comment %} <form class="form-inline my-2 my-lg-0">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">

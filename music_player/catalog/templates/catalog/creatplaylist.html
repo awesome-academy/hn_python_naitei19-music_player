@@ -5,7 +5,7 @@
 {% block body %}
 
 <div class = "conatainer my-3" >
-    <form action = "/catalog/creatplaylist/" method ="POST">{% csrf_token %}
+    <form action = "/catalog/creatplaylist/" enctype="multipart/form-data" method ="POST">{% csrf_token %}
 
 
     <div class="form-group">

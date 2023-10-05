@@ -11,12 +11,12 @@
 <div class="card mb-3" style="max-width: 940px; padding-top: 3%;">
     <div class="row no-gutters">
       <div class="col-md-4">
-        <img src="{%static 'catalog/music.jpg'%}" class="card-img" alt="...">
+        <img class="card-image" src="{{ i.image.url }}">
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title" style="color: yellow; font-weight: 650;">{{i.name}}</h5>
-          <p class="card-text">{{i.tags}}</p>
+          <h5 class="card-title" style="color: black; font-weight: 650;">{{i.name}}</h5>
+          {% comment %} <p class="card-text">{{i.tags}}</p> {% endcomment %}
           <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger">Listen Song</button></p>
         </div>
       </div>

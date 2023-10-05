@@ -17,7 +17,7 @@ class Tag(models.Model):
 
     def __str__(self):
         """String for representing the Model object"""
-        return self.n
+        return self.name
 
 class Song(models.Model):
     """Model representing a song"""
@@ -28,7 +28,7 @@ class Song(models.Model):
     content = models.FileField(upload_to='songs')
     artist = models.ForeignKey(
         settings.AUTH_USER_MODEL,  # Use the AUTH_USER_MODEL setting
-        on_delete=models.SET_NULL,
+        on_delete=models.CASCADE,
         null=True
     )
     status = models.BooleanField(
@@ -36,6 +36,13 @@ class Song(models.Model):
         help_text=_('Check this box to make the song public')
     )
     listen_count = models.PositiveIntegerField(default=0)
+    like_count = models.PositiveBigIntegerField(default=0)
+    tags = models.ManyToManyField(Tag, through='SongTag',through_fields=('song','tag'))
+
+    def display_tags(self):
+        return ', '.join(tag.name for tag in self.tags.all()[:3])
+    
+    display_tags.short_description = 'Tags'
 
     def __str__(self):
         """Return song name"""
@@ -43,6 +50,10 @@ class Song(models.Model):
 
     class Meta:
         ordering = ["name"]
+
+class SongTag(models.Model):
+    tag = models.ForeignKey(Tag, on_delete=models.CASCADE)
+    song = models.ForeignKey(Song, on_delete=models.CASCADE)
 
 class User(AbstractUser):
     history = models.ManyToManyField(Song, through='UserSong', through_fields=('user','song'))
@@ -70,6 +81,7 @@ class UserSong(models.Model):
     # his_id = models.AutoField(primary_key=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     song = models.ForeignKey(Song, on_delete=models.CASCADE)
+    like = models.BooleanField(default = False)
 
     
     

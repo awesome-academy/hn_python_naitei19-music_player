@@ -14,8 +14,7 @@
       </div>
       <div class="col-md-8">
         <div class="card-body">
-          <h5 class="card-title" style="color: yellow; font-weight: 650;">{{ i.name }}</h5>
-          <p class="card-text">{{i.tags}}</p>
+          <h5 class="card-title" style="color: black; font-weight: 650;">{{ i.name }}</h5>
           <p>Listen count: {{ i.listen_count }}</p>
           <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger">Listen Song</button></p>
           <a href="/media/{{ i.content }}" download="{{ i.name }}" type="video/mp4">

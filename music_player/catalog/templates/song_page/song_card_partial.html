@@ -1,21 +1,20 @@
-{% load i18n %}
 <div class="card mb-3">
     <div class="card-mb3-add">
       <div class="row no-gutters">
         <div class="col-md-4">
-          <img src={{i.image.url}} class="card-img">
+        <img class="card-image" src="{{ i.image.url }}">
         </div>
         <div class="col-md-8">
           <div class="card-body">
             <h5 class="card-title">{{ i.name }}</h5>
-            <h5 class="card-tags">{% trans "Category:"%}
+            <h5 class="card-tags">Category: 
               {% for j in i.tags.all %}
               <div class="p-1 d-inline-block border border-primary rounded">{{j.name}}</div>
               {% endfor %}
             </h5>
-            <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger">{% trans "Listen Song"%}</button></p>
+            <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger">Listen Song</button></p>
             <a href="/media/{{ i.content }}" download="{{ song.name }}" type="video/mp4">
-              <button class="btn btn-outline-danger">{% trans "Download Song"%}</button>
+              <button class="btn btn-outline-danger">Download Song</button>
             </a> 
           </div>
         </div>

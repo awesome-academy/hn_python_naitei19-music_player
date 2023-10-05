@@ -1,4 +1,4 @@
-{% extends "catalog/index.html" %}
+  {% extends "catalog/index.html" %}
 {% load static %}
 {% load i18n %}
 
@@ -29,7 +29,7 @@
       <div class="col-md-8">
         <div class="card-body">
           <h5 class="card-title" style="font-weight: 650;">{{ i.name }}</h5>
-          <p class="card-text">{{i.tags}}</p>
+
           
           {% if user.is_authenticated %}
           <form action = "/catalog/usersong/" method ="POST">{% csrf_token %}

@@ -13,17 +13,31 @@
         </div>
         <div class="col-md-6">
             <h2 style="padding-top: 6%; font-weight: 550; color: coral;">Title: {{song.name}}
-            <h4 style="padding-top: 2%; font-weight: 550;">Category: {{song.tags}}</h4>
-            <h4 style="padding-top: 2%; font-weight: 550;">Artist: {{ song.Artist }}</h4>
+            <h4 class="card-tags">Category: 
+                {% for i in song.tags.all %}
+                <div class="p-1 d-inline-block border border-primary rounded">{{i.name}}</div>
+                {% endfor %}
+            </h4>
+            <h4 class="card-artist">Artist: 
+                <a href="/catalog/artist/{{song.artist.id}}">
+                  <button class="p-1 d-inline-block border border-primary rounded">{{song.artist.username}}</button>
+            </h4>
+            <h4 class="card-artist">Likes: {{ like_count }}</h4>
             <video width="320" height="80" controls>
                 <source src="/media/{{song.content}}" type="video/mp4">
             </video>
+
             {% comment %} {{ song.id }} {% endcomment %}
             <div>
             <form action = "/catalog/listenlater/" method ="POST">{% csrf_token %}
             <input type = "hidden" name ="listen_id" value = "{{ song.id }}">
-            <button type="summit" class="btn btn-outline-danger">Add to Listenlater</button> 
+            <button type="submit" class="btn btn-outline-danger">Add to Listen Later</button> 
             </form>
+            <form action = "/catalog/likesong/" method ="POST">{% csrf_token %}
+                <input type = "hidden" name ="listen_id" value = "{{ song.id }}">
+                <button type="submit" class="btn btn-outline-danger"> Like Song</button> 
+            </form>
+            <a href="/catalog/recommended_song/{{song.id}}" class="btn btn-outline-danger">Recommended Song</a>
             <a href="/media/{{ song.content }}" download="{{ song.name }}" type="video/mp4">
                 <button class="btn btn-outline-danger">Download Song</button>
             </a>   

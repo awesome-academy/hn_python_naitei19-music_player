@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from catalog.models import Song,Listenlater ,UserSong,Playlist, Comment ,Report
+from catalog.models import Song,Listenlater ,UserSong,Playlist, Comment ,Report, User
 from django.shortcuts import redirect
 from django.utils.html import escape
 from django.http import HttpResponse
@@ -8,6 +8,8 @@ from django.db.models import F
 from django.shortcuts import get_object_or_404
 from django.contrib import messages
 from .forms import reportForm
+from django.db.models import Q
+from django.db import connection, transaction
 
 
 
@@ -70,7 +72,7 @@ def creatplaylist(request):
         name = request.POST.get('name')  
         current_user = request.user
         owner = current_user
-        image = request.POST.get('image')  
+        image = request.FILES['image']  
         
         if name and owner:  
             
@@ -82,7 +84,7 @@ def creatplaylist(request):
 
 def index(request):
     song = Song.objects.all()
-    return render(request, 'catalog/index.html', {'song': song})
+    return render(request, 'homepage/song_card.html', {'song': song})
 
 def songs(request):
     song = Song.objects.all()
@@ -93,9 +95,10 @@ def songs(request):
 def songpost(request, id):
     song = Song.objects.get(pk = id)
     comments = Comment.objects.filter(song = song).all()
-    # dd(comments)
     song.listen_count = F('listen_count') + 1
     song.save()
+    recommended = Song.objects.filter(Q(artist = song.artist)|Q(tags__in=song.tags.all())).exclude(id=song.id).distinct()
+    like_count = UserSong.objects.filter(song = song, like = True).count()
     if request.method == 'POST':
             # dd(request)
             user = request.user
@@ -104,7 +107,7 @@ def songpost(request, id):
             saveComment = Comment(user = user, song = song, text = text)
             saveComment.save()
             return redirect(f"/catalog/songs/{id}")
-    return render(request, 'song_page/songpost.html', {'song': song, 'comments': comments})
+    return render(request, 'song_page/songpost.html', {'song': song, 'comments': comments, 'recommended_song': recommended, 'like_count': like_count})
 
 def search(request):
     query = request.GET.get("query")
@@ -187,3 +190,47 @@ def report_song(request):
         form = reportForm()
 
     return render(request, 'catalog/report_song.html', {'form': form})
+
+def artist(request, artist_id):
+    user = User.objects.get(pk = artist_id)
+    # dd(user)
+    song = Song.objects.filter(artist = user).all()
+    # dd(song)
+    recommended1 = Song.objects.filter(artist_id=artist_id).order_by('-name')
+    #dd(recommended1)
+    return render(request, 'song_page/artist.html', {'song': song, 'recommended1_song': recommended1,'artist':user})
+
+def song_card_partial(request):
+    return render(request, 'homepage/song_card.html', {})
+
+def recommended_song(request, id):
+    song = Song.objects.get(pk = id)
+    recommended = Song.objects.filter(Q(artist = song.artist)|Q(tags__in=song.tags.all())).exclude(id=song.id).distinct()
+    return render(request, 'song_page/recommended_song.html', {'song': song, 'recommended': recommended})
+
+def like_song(request):
+    song_id = request.POST['listen_id']
+    user = request.user
+    song = Song.objects.filter(pk = song_id).first()
+    comments = Comment.objects.filter(song = song).all()
+    recommended = Song.objects.filter(Q(artist = song.artist)|Q(tags__in=song.tags.all())).exclude(id=song.id).distinct()
+    # dd(song)
+    like_song = UserSong(song = song, user = user)
+    like_song.save()
+    like = UserSong.objects.filter(song = song, user = user).first()
+    # dd(like)
+    if (like.like == False):
+        like.like = True
+    else:
+        like.like = False
+    like.save()    
+    like_count = UserSong.objects.filter(song = song, like = True).count()
+    song.like_count = like_count
+    song.save()
+    # dd(like_count)
+    # dd(1)   
+    return render(request, 'song_page/songpost.html', {'song': song, 'comments': comments, 'recommended_song': recommended, 'like_count': like_count})
+
+def display_most_like(request):
+    song = Song.objects.all().order_by('-like_count')
+    return render(request, 'song_page/display_most_like.html', {'display_most_like': song})
