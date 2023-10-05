@@ -1,0 +1,99 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Song{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="/media/{{song.image}}" height="350px" width="350px">
+        </div>
+        <div class="col-md-6">
+            <h2 style="padding-top: 6%; font-weight: 550; color: coral;">Title: {{song.name}}
+            <h4 style="padding-top: 2%; font-weight: 550;">Category: {{song.tags}}</h4>
+            <h4 style="padding-top: 2%; font-weight: 550;">Artist: {{ song.Artist }}</h4>
+            <video width="320" height="80" controls>
+                <source src="/media/{{song.content}}" type="video/mp4">
+            </video>
+            {% comment %} {{ song.id }} {% endcomment %}
+            <div>
+            <form action = "/catalog/listenlater/" method ="POST">{% csrf_token %}
+            <input type = "hidden" name ="listen_id" value = "{{ song.id }}">
+            <button type="summit" class="btn btn-outline-danger">Add to Listenlater</button> 
+            </form>
+            <a href="/media/{{ song.content }}" download="{{ song.name }}" type="video/mp4">
+                <button class="btn btn-outline-danger">Download Song</button>
+            </a>   
+            <button class="btn btn-outline-danger" onclick="showReportForm()">Report Song</button>
+                
+            <div id="reportForm" style="display: none;">
+                <h4>Report Song</h4>
+                <form action="{% url "report_song" %}" method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" name="song_id" value="{{ song.id }}">
+                    <textarea name="reason" class="form-control" placeholder="Reason for reporting..."></textarea>
+                    <button type="submit" class="btn btn-outline-danger">Submit Report</button>
+                    <button type="button" class="btn btn-outline-secondary" onclick="hideReportForm()">Cancel</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- JavaScript để hiển thị và ẩn pop-up -->
+<script>
+function showReportForm() {
+    var reportForm = document.getElementById("reportForm");
+    reportForm.style.display = "block";
+}
+
+function hideReportForm() {
+    var reportForm = document.getElementById("reportForm");
+    reportForm.style.display = "none";
+}
+</script>
+{% if cond %}
+
+{% endif %} 
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Comments:</h3>
+            <ul>
+                {% for comment in comments %}
+                    <li>{{ comment.user.username }} - {{ comment.created_at|date:"F d, Y H:i" }}</li>
+                    <p>{{ comment.text }}</p>
+                {% empty %}
+                    <li>No comments yet.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- End Comments Section -->
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Add a Comment:</h3>
+            <form action="{{song.id}}" method="POST">
+                {% csrf_token %}
+                <textarea name="text" class="form-control" placeholder="Leave a comment..."></textarea>
+                <button type="submit" class="btn btn-outline-primary">Submit Comment</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+{% endblock %}
+
+

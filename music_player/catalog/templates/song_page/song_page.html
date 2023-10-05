@@ -1,0 +1,52 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}All Songs{% endblock %}
+
+{% block body %}
+
+<div class="container">
+{% for i in song %}
+<div class="card mb-3" style="max-width: 940px; padding-top: 3%;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="/media/{{i.image}}" class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" style="color: yellow; font-weight: 650;">{{ i.name }}</h5>
+          <p class="card-text">{{i.tags}}</p>
+          
+          {% if user.is_authenticated %}
+          <form action = "/catalog/usersong/" method ="POST">{% csrf_token %}
+          <input type = "hidden" name ="song" value = "{{i.id}}">
+          <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger">Listen Song</button></p>
+          </form>
+          {% comment %} dropdown show các playlists của user {% endcomment %}
+
+          <div class="dropdown">
+            <a class="btn btn-outline-danger text-danger dropdown-toggle" id="navbarDropdown{{i.id}}" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              {% trans "Add to playlist" %}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown{{i.id}}">
+            {% for playlist in playlists %}
+              <form action = "/catalog/addplaylist/" method ="POST">{% csrf_token %}
+              <input type = "hidden" name ="song_id" value = "{{i.id}}">
+              <input type = "hidden" name ="playlist_id" value = "{{playlist.id}}">
+              <input type = "submit" class = "dropdown-item" value = "{{playlist.name}}">
+              </form>
+              {% comment %} <a class="dropdown-item" href="#"> {{playlist.name}} </a> {% endcomment %}
+            {% endfor %}
+            </div>
+          </div>
+          {% else %}
+          <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger">Listen Song</button></p>
+          {%endif%}
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}

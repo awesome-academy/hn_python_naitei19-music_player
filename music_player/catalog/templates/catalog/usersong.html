@@ -1,0 +1,26 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}usersong{% endblock %}
+{% block body %}
+<h1> History song </h1>
+{% for i in history %}
+<div></div>
+<div class="card mb-3" style="max-width: 940px; padding-top: 3%;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img src="/media/{{i.song.image}}" class="card-img" alt="...">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" style="color: yellow; font-weight: 650;">{{ i.song.name }}</h5>
+          <p class="card-text">{{i.tags}}</p>
+          <a href="/catalog/songs/{{i.song.id}}"><button class="btn btn-outline-danger">Listen Song</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endfor %}
+{% endblock %}

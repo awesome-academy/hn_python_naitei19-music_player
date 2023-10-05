@@ -1,0 +1,23 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}Report Song{% endblock %}
+
+{% block body %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Report Song</h2>
+            <form action="{% url "report_song" %}" method="POST">
+            {% comment %} <form method="POST"> {% endcomment %}
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit" class="btn btn-outline-danger">Submit Report</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
