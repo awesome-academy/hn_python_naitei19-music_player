@@ -2,21 +2,34 @@
 {% load i18n %}
 {% load static %}
 {% block content %}
-
+<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <img src="{%static 'catalog/music1.jpg'%} " class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{%static 'catalog/music1.jpg'%}" class="d-block w-100" alt="...">
+    </div>
+    <div class="carousel-item">
+      <img src="{%static 'catalog/music1.jpg'%}" class="d-block w-100" alt="...">
+    </div>
+  </div>
+</div>
 <h2 class = "section-header"> {% trans "Trending Songs" %}</h2>
 <div class = "row cards-wrapper">
-{% for i in song %}
-<div class = "card-wrapper">
-<div class="card card-styling">
-  <img src="{%static 'catalog/music.jpg'%}" class="card-img-top" alt="...">
+  {% for i in song %}
+  <div class = "card-wrapper">
+  <div class="card card-styling">
+  <img src={{i.image.url}}>
   <div class="card-body">
-    <h5 class="card-title"> {% trans "Song's name" %}</h5>
-    <p class="card-text"> {% trans "Mô tả" %}</p>
-  <a href="#" class="btn btn-primary"> {% trans "Listen song" %}</a>
+    <h5 class="card-title"> {{i.name}}</h5>
+    <p class="card-text"> {{i.tags}}</p>
+    <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger"> {% trans "Listen song" %}</a>
   </div>
 </div>
 </div>
 {% endfor %}
+
 </div>
 <hr>
 
@@ -25,11 +38,11 @@
 {% for i in song %}
   <div class = "card-wrapper">
   <div class="card card-styling">
-  <img src="{%static 'catalog/music.jpg'%}" class="card-img-top" alt="...">
+  <img src={{i.image.url}}>
   <div class="card-body">
-    <h5 class="card-title"> {% trans "Song's name" %}</h5>
-    <p class="card-text"> {% trans "Mô tả" %}</p>
-  <a href="#" class="btn btn-primary"> {% trans "Listen song" %}</a>
+    <h5 class="card-title"> {{i.name}}</h5>
+    <p class="card-text"> {{i.tags}}</p>
+    <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger"> {% trans "Listen song" %}</a>
   </div>
 </div>
 </div>
@@ -43,16 +56,14 @@
 {% for i in song %}
   <div class = "card-wrapper">
   <div class="card card-styling">
-  <img src="{%static 'catalog/music.jpg'%}" class="card-img-top" alt="...">
+  <img src={{i.image.url}} class="card-image">
   <div class="card-body">
-    <h5 class="card-title"> {% trans "Song's name" %}</h5>
-    <p class="card-text"> {% trans "Mô tả" %}</p>
-  <a href="#" class="btn btn-primary"> {% trans "Listen song" %}</a>
+    <h5 class="card-title"> {{i.name}}</h5>
+    <p class="card-text"> {{i.tags}}</p>
+  <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger"> {% trans "Listen song" %}</a>
   </div>
 </div>
 </div>
 {% endfor %}
 </div>
-<hr>
-
 {% endblock %}

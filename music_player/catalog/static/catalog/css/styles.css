@@ -10,3 +10,48 @@
 .card-styling{
   width: 25rem; padding left: 2%;
 }
+.button-solid {
+  border: none;
+  outline: none;
+}
+.card-title{
+  color: yellow; 
+  font-weight: 650;
+}
+.card-tags{
+  padding-top: 2%; 
+  font-weight: 550;
+}
+.card-image {
+  height: 350px;
+  width: 350px;
+}
+.card-title-coral{
+  padding-top: 6%; 
+  font-weight: 550; 
+  color: coral;
+}
+.card-artist{
+  padding-top: 2%; 
+  font-weight: 550;
+}
+.card-mb3-add{
+  max-width: 940px; 
+  padding-top: 3%;
+}
+.card-video{
+  width: 50%; 
+  height: 50%; 
+}
+.button-solid{
+  color: gray; 
+  cursor: pointer;
+}
+.button-download{
+  display: block; 
+  margin-top: 20px;
+}
+.listen_count{
+  padding-top: 2%; 
+  font-weight: 550;
+}

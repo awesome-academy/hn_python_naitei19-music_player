@@ -1,0 +1,34 @@
+{% extends "catalog/index.html" %}
+{% load static %}
+{% load i18n %}
+
+{% block title %}{% trans "Song"%}{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <!-- Left Column: Current Song Details -->
+            <img class="card-image" src="song.image.url">
+            <h2 class="card-title-coral">{% trans "Title:"%}{{song.name}}</h2>
+            
+            <h4 class="card-tags">  {% trans "Category:"%}
+                {% for i in song.tags.all %}
+                <div class="p-1 d-inline-block border border-primary rounded">{{i.name}}</div>
+                {% endfor %}
+            </h4>
+            <h4 class="card-artist">{% trans "Artist:"%}
+              <a href="/catalog/artist/{{song.artist.id}}">
+                <button class="p-1 d-inline-block border border-primary rounded">{{song.artist.username}}</button>
+            </h4>
+            <!-- Download Button -->
+            <a href="/media/{{ song.content }}" download="{{ song.name }}" type="video/mp4" class="button-download">
+                <button class="btn btn-danger btn-lg">{% trans "Download Song"%}</button>
+            </a>
+            <!-- Video Player -->
+            <video class="card-video" controls>
+                <source src="/media/{{song.content}}" type="video/mp4">
+            </video>
+        </div>
+        <div class="col-md-6">
+{% endblock %}
