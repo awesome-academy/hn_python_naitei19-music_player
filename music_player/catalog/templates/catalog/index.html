@@ -1,67 +1,77 @@
 <!DOCTYPE html>
+<html>
+<head>
 {% load static %}
 {% load i18n %}
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% trans "Music" %}</title>
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{% static 'catalog/css/styles.css' %}">
+<title>{% block title %} {% endblock %}</title>
 </head>
+<link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+<link rel="stylesheet" href="{% static 'catalog/css/styles.css' %}">
 <body>
+    {% block navbar %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="/catalog/"> {% trans "Music" %} </a>
+        <a class="navbar-brand" href="/catalog/"> {% trans "MP3Player" %} </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+          <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "index" %}">{% trans "Home" %} <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url "songs" %}"> {% trans "All Songs" %} </a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        {% trans "List" %}
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#"> {% trans "Most Downloaded Songs" %} </a>
-                        <a class="dropdown-item" href="#"> {% trans "Your Playlist" %} </a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{% url "trending" %}"> {% trans "Trending Songs" %} </a>
-                    </div>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0" method="GET" action="{% url "search" %}">
-                <input name="query" class="form-control mr-sm-2" type="search" placeholder="{% trans 'Search' %}" aria-label="Search">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> {% trans "Search" %} </button>
-            </form>
-
+          <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+              <a class="nav-link" href="/catalog/">{% trans "Home" %} <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/catalog/songs/"> {% trans "All Songs" %} </a>
+            </li>
             {% if user.is_authenticated %}
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    {{ user.get_username }}
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="{% url 'logout' %}?next={{ request.path }}"> {% trans "Logout" %} </a>
-                </div>
-            </div>
-            {% else %}
-            <a class="btn btn-outline-info my-2 my-sm-0" href="{% url 'login' %}?next={{ request.path }}"> {% trans "Login/Register" %} </a>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                {% trans "My profile" %}
+              </a>
+              <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                <a class="dropdown-item" href="/catalog/listenlater"> {% trans "Listenlater" %} </a>
+                <a class="dropdown-item" href="/catalog/usersong"> {% trans "User History song" %} </a>
+                <a class="dropdown-item" href="/catalog/upload"> {% trans "Upload song" %} </a>
+                <a class="dropdown-item" href="/catalog/creatplaylist"> {% trans "Create your playlist" %} </a>
+                <a class="dropdown-item" href="/catalog/playlist"> {% trans "All playlists" %} </a>
+                <a class="dropdown-item" href="/catalog/trending"> {% trans "Trending Songs" %} </a>
+                <a class="dropdown-item" href="/catalog/display_most_like"> {% trans "Most Liked Song" %} </a>
+              </div>
+            </li>
             {% endif %}
+            {% comment %} <li class="nav-item">
+              <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">  {% trans "Disabled" %} </a>
+            </li> {% endcomment %}
+            <form class="form-inline my-2 my-lg-0" method="GET" action="{% url "search" %}">
+              <input name="query" class="form-control mr-sm-2" type="search" placeholder="{% trans 'Search' %}" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> {% trans "Search" %} </button>
+          </form>
+          </ul>
+          {% comment %} <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit"> {% trans "Search" %} </button>
+          </form> {% endcomment %}
+          {% if user.is_authenticated %}
+          <div class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+             {{user.get_username}}
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="{% url 'logout'%}?next={{request.path}}"> {% trans "Logout" %} </a>
+              {% comment %} <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#"> {% trans "Something else here" %} </a> {% endcomment %}
+            </div>
+          </div>
+          {% else %}
+          <a class="btn btn-outline-info my-2 my-sm-0" href="{% url 'login'%}?next={{request.path}}"> {% trans "Login/Register" %} </a>
+          {% endif %}
         </div>
-    </nav>
-
-    <div class="container mt-4">
-        {% block content %}
-        {% endblock %}
-    </div>
-
-    <script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
-    <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+      </nav>
+      {% endblock %}
+      {% block body %}
+      {% endblock %}
+<script src="{% static 'bootstrap/js/jquery.min.js' %}"></script>
+<script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
+
 </html>

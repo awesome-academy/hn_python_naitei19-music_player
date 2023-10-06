@@ -1,57 +1,21 @@
 .section-header{
-  padding-left: 37.5%; padding-top: 2%; front-family: 'Verdana';font-size: 45px;
+  padding-left: 37.5%; padding-top: 2%; font-family: 'Verdana';font-size: 45px;
 }
 .cards-wrapper{
-  padding-top: 3%; padding-left: 2 %;
+  padding-top: 3%; padding-left: 2%;
 }
 .card-wrapper{
   padding-left: 4%;
 }
 .card-styling{
-  width: 25rem; padding left: 2%;
+  width: 25rem; padding-left: 2%;
 }
-.button-solid {
-  border: none;
-  outline: none;
-}
-.card-title{
-  color: yellow; 
-  font-weight: 650;
-}
-.card-tags{
-  padding-top: 2%; 
+.recommended-song {
   font-weight: 550;
-}
-.card-image {
-  height: 350px;
-  width: 350px;
-}
-.card-title-coral{
-  padding-top: 6%; 
-  font-weight: 550; 
   color: coral;
+  /* Add any other styling you want for recommended songs */
 }
-.card-artist{
-  padding-top: 2%; 
-  font-weight: 550;
-}
-.card-mb3-add{
-  max-width: 940px; 
-  padding-top: 3%;
-}
-.card-video{
-  width: 50%; 
-  height: 50%; 
-}
-.button-solid{
-  color: gray; 
-  cursor: pointer;
-}
-.button-download{
-  display: block; 
-  margin-top: 20px;
-}
-.listen_count{
-  padding-top: 2%; 
-  font-weight: 550;
+.card-image{
+  width: 200px;
+  height: 200px;
 }

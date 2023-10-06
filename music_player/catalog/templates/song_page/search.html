@@ -2,13 +2,26 @@
 {% load static %}
 {% load i18n %}
 
-{% block title %}{% trans "All Songs"%}{% endblock %}
+{% block title %}All Songs{% endblock %}
 
-{% block content %}
+{% block body %}
 <div class="container">
-<h1>{% trans "Your searching result here: "%}</h1>
+<h1> Your searching result here: </h1>
 {% for i in songs %}
-  {% include 'song_page/song_card_partial.html' with songs=songs %}
-{% endfor %}
+<div class="card mb-3" style="max-width: 940px; padding-top: 3%;">
+    <div class="row no-gutters">
+      <div class="col-md-4">
+        <img class="card-image" src="{{ i.image.url }}">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <h5 class="card-title" style="color: black; font-weight: 650;">{{i.name}}</h5>
+          {% comment %} <p class="card-text">{{i.tags}}</p> {% endcomment %}
+          <a href="/catalog/songs/{{i.id}}"><button class="btn btn-outline-danger">Listen Song</button></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
 </div>
 {% endblock %}
